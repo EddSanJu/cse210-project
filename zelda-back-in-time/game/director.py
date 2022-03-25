@@ -13,6 +13,11 @@ class Director(arcade.Window):
 
         self._cast = Cast()
 
+        #variables to create the GUI elements
+        self.gui_camera = None
+        self.score = 0
+        #
+
     def setup(self):
         self._background = Background('grass.png')
 
@@ -20,12 +25,37 @@ class Director(arcade.Window):
 
         self._player = Actor('female_idle.png', [2, 3])
 
+        self._key = Actor('keys.png',  [3, 3]) 
+
+        #element to show the GUI
+        self.gui_camera = arcade.Camera(self.width, self.height)
+        self.score = 0
+        #
+
+
+
+
+
     def on_draw(self):
         self._background.draw()
 
         self._player.draw()
 
+        self._key.draw()
+
         self._level.draw()
+
+        #GUI drawing
+        self.gui_camera.use()
+        game_text = f"Keys {self.score}"
+        arcade.draw_text(
+            game_text,
+            10, #add margin to the left
+            620, #add margin to the bottom 
+            arcade.csscolor.WHITE,
+            15 # font size
+        )
+
 
     def on_key_press(self, key, modifiers):
         position = self._player.get_position()
